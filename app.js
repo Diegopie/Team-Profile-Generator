@@ -6,7 +6,6 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 const render = require("./lib/htmlRenderer");
-const Choices = require("inquirer/lib/objects/choices");
 
 
 // * File Pathing
@@ -26,8 +25,10 @@ const validate =
     },
     // Figure out regex for email
     email: (inp) => {
-        if(inp == "") {
-            return "Please Enter Valid Information";
+        let format = inp.match(/\S+@\S+\.\S+/g);
+        if(!format) {
+            
+            return "Please Enter a Valid Email";
         }
         return true;
     }
@@ -162,7 +163,7 @@ function subHuman () {
     let fullSub = globalQ('intern')
     // Push intern specific question and more question to fullSub array;
     fullSub.push(specifQ.intern, more)
-            // console.log(fullMan);
+            // console.log(fullSub);
     inquirer
         .prompt(fullSub)
         .then(function(data){
@@ -181,7 +182,7 @@ function engin () {
     let v8 = globalQ('engineer')
     // Push manger specific question and more question to fullMan array;
     v8.push(specifQ.engineer, more)
-            // console.log(fullMan);
+            // console.log(v8);
     inquirer
         .prompt(v8)
         .then(function(data){
